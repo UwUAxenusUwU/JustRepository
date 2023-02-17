@@ -207,14 +207,17 @@ void Sort(int arr[ROWS][COLS], const int ROWS, const int COLS)
 }
 void Sort(double arr[ROWS][COLS], const int ROWS, const int COLS)
 {
+	int interactions = 0;
 	for (int i = 0; i < ROWS; i++)
 	{
 		for (int j = 0; j < COLS; j++)
 		{
 			for (int y = i; y < ROWS; y++)
 			{
+
 				for (int x = y == i ? j + 1 : 0; x < COLS; x++)
 				{
+					interactions++;
 					if (arr[y][x] < arr[i][j])
 					{
 						double buffer = arr[i][j];
@@ -225,6 +228,7 @@ void Sort(double arr[ROWS][COLS], const int ROWS, const int COLS)
 			}
 		}
 	}
+	cout << "Всего интеракций было: " << interactions << " раз." << endl;
 }
 int Sum(int arr[], const int n)
 {
