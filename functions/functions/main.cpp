@@ -17,15 +17,15 @@ void Print(T arr[], const int n);
 template<typename T>
 void Print(T arr[ROWS][COLS], const int ROWS, const int COLS);
 
-void Sort(int arr[], const int n);
-void Sort(double arr[], const int n);
-void Sort(int arr[ROWS][COLS], const int ROWS, const int COLS);
-void Sort(double arr[ROWS][COLS], const int ROWS, const int COLS);
+template<typename T>
+void Sort(T arr[], const int n);
+template<typename T>
+void Sort(T arr[ROWS][COLS], const int ROWS, const int COLS);
 
-int Sum(int arr[], const int n);
-double Sum(double arr[], const int n);
-int Sum(int arr[ROWS][COLS], const int ROWS, const int COLS);
-double Sum(double arr[ROWS][COLS], const int ROWS, const int COLS);
+template<typename T>
+int Sum(T arr[], const int n);
+template<typename T>
+int Sum(T arr[ROWS][COLS], const int ROWS, const int COLS);
 
 template<typename T>
 double Avg(T arr[], const int n);
@@ -138,7 +138,8 @@ void Print(T arr[ROWS][COLS], const int ROWS, const int COLS)
 		cout << endl;
 	}
 }
-void Sort(int arr[], const int n)
+template<typename T>
+void Sort(T arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -153,22 +154,8 @@ void Sort(int arr[], const int n)
 		}
 	}
 }
-void Sort(double arr[], const int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = i + 1; j < n; j++)
-		{
-			if (arr[j] < arr[i])
-			{
-				double buffer = arr[i];
-				arr[i] = arr[j];
-				arr[j] = buffer;
-			}
-		}
-	}
-}
-void Sort(int arr[ROWS][COLS], const int ROWS, const int COLS)
+template<typename T>
+void Sort(T arr[ROWS][COLS], const int ROWS, const int COLS)
 {
 	for (int i = 0; i < ROWS; i++)
 	{
@@ -180,7 +167,7 @@ void Sort(int arr[ROWS][COLS], const int ROWS, const int COLS)
 				{
 					if (arr[y][x] < arr[i][j])
 					{
-						int buffer = arr[i][j];
+						T buffer = arr[i][j];
 						arr[i][j] = arr[y][x];
 						arr[y][x] = buffer;
 					}
@@ -189,60 +176,20 @@ void Sort(int arr[ROWS][COLS], const int ROWS, const int COLS)
 		}
 	}
 }
-void Sort(double arr[ROWS][COLS], const int ROWS, const int COLS)
+template<typename T>
+int Sum(T arr[], const int n)
 {
-	for (int i = 0; i < ROWS; i++)
-	{
-		for (int j = 0; j < COLS; j++)
-		{
-			for (int y = i; y < ROWS; y++)
-			{
-				for (int x = y == i ? j + 1 : 0; x < COLS; x++)
-				{
-					if (arr[y][x] < arr[i][j])
-					{
-						double buffer = arr[i][j];
-						arr[i][j] = arr[y][x];
-						arr[y][x] = buffer;
-					}
-				}
-			}
-		}
-	}
-}
-int Sum(int arr[], const int n)
-{
-	int sum = 0;
+	T sum = 0;
 	for (int i = 0; i < n; i++)
 	{
 		sum += arr[i];
 	}
 	return sum;
 }
-double Sum(double arr[], const int n)
+template<typename T>
+int Sum(T arr[ROWS][COLS], const int ROWS, const int COLS)
 {
-	double sum = 0;
-	for (int i = 0; i < n; i++)
-	{
-		sum += arr[i];
-	}
-	return sum;
-}
-int Sum(int arr[ROWS][COLS], const int ROWS, const int COLS)
-{
-	double sum = 0;
-	for (int i = 0; i < ROWS; i++)
-	{
-		for (int j = 0; j < COLS; j++)
-		{
-			sum += arr[i][j];
-		}
-	}
-	return sum;
-}
-double Sum(double arr[ROWS][COLS], const int ROWS, const int COLS)
-{
-	double sum = 0;
+	T sum = 0;
 	for (int i = 0; i < ROWS; i++)
 	{
 		for (int j = 0; j < COLS; j++)
@@ -255,10 +202,10 @@ double Sum(double arr[ROWS][COLS], const int ROWS, const int COLS)
 template<typename T>
 double Avg(T arr[], const int n)
 {
-	return (double)Sum(arr, n) / n;
+	return Sum(arr, n) / n;
 }
 template<typename T>
 double Avg(T arr[ROWS][COLS], const int ROWS, const int COLS)
 {
-	return (double)Sum(arr, ROWS, COLS) / (ROWS * COLS);
+	return Sum(arr, ROWS, COLS) / (ROWS * COLS);
 }
