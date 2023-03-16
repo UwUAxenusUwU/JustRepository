@@ -12,6 +12,24 @@ void main()
 	int* arr = new int[n];
 	FillRand(arr, n);
 	Print(arr, n);
+	int value;
+	cout << "Введите значение добавляемого элемента: "; cin >> value;
+	//1)
+	int* buffer = new int[n + 1];
+	//2)
+	for (int i=0; i < n; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	//3)
+	delete[] arr;
+	//4)
+	arr = buffer;
+	//5)
+	arr[n] = value;
+	//6
+	n++;
+	Print(arr, n);
 	delete[] arr;
 }
 
