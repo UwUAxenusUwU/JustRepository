@@ -44,4 +44,5 @@ void main()
 	for (int i = 0; i < k; i++)
 		cout << crr[i] << "\t";
 	cout << endl;
+	delete[] brr, crr;
 }
