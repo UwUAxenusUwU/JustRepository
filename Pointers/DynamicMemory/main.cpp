@@ -1,6 +1,12 @@
 #include<iostream>
 using namespace std;
 
+int** Allocate(int rows, int cols);
+void Clear(int** arr);
+int** push_row_back(int** arr, int& rows, int& cols);
+int** push_row_front(int** arr, int& rows, int& cols);
+int** insert(int** arr, int& rows, int& cols, int insert_row_index);
+
 void FillRand(int arr[], const int n);
 void FillRand(int** arr, const int rows, const int cols);
 void Print(int arr[], const int n);
@@ -15,8 +21,8 @@ int* pop_front(int arr[], int& n);
 int* insert(int arr[], int& n, int insert_number, int insert_value);
 int* erase(int arr[], int& n, int erase_number);
 
-#define DYNAMIC_MEMORY_1
-//#define DYNAMIC_MEMORY_2
+//#define DYNAMIC_MEMORY_1
+#define DYNAMIC_MEMORY_2
 
 void main()
 {
@@ -58,6 +64,30 @@ void main()
 	cout << "¬ведите количество строк: "; cin >> rows;
 	cout << "¬ведите количество элементов строки: "; cin >> cols;
 
+	int** arr = Allocate(rows, cols);
+	FillRand(arr, rows, cols);
+	Print(arr, rows, cols);
+	cout << "Push row back: " << endl;
+	arr = push_row_back(arr, rows, cols);
+	Print(arr, rows, cols);
+	cout  << endl;
+	cout << "Push row front: " << endl;
+	arr = push_row_front(arr, rows, cols);
+	Print(arr, rows, cols);
+	cout << endl;
+	int insert_row_index;
+	cout << "¬ведите индекс вставл€емой строки: "; cin >> insert_row_index; cout << endl;
+	cout << "insert: " << endl;
+	arr = insert(arr, rows, cols, insert_row_index);
+	Print(arr, rows, cols);
+	cout << endl;
+
+	Clear(arr);
+#endif
+}
+
+int** Allocate(int rows, int cols)
+{
 	//1) —оздаЄм массив указателей
 	int** arr = new int* [rows];
 	//2) —оздаЄм строки двумерного массива
@@ -65,13 +95,54 @@ void main()
 	{
 		arr[i] = new int[cols] {};
 	}
-
-	FillRand(arr, rows, cols);
-	Print(arr, rows, cols);
-
-
+	return arr;
+}
+void Clear(int** arr)
+{
 	delete[] arr;
-#endif
+}
+int** push_row_back(int** arr, int& rows, int& cols)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	delete[] arr;
+	arr = buffer;
+	arr[rows] = new int[cols] {};
+	rows++;
+	return arr;
+}
+int** push_row_front(int** arr, int& rows, int& cols)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++)
+	{
+		buffer[i + 1] = arr[i];
+	}
+	delete[] arr;
+	arr = buffer;
+	arr[0] = new int[cols] {};
+	rows++;
+	return arr;
+}
+int** insert(int** arr, int& rows, int& cols, int insert_row_index)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < insert_row_index; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	buffer[insert_row_index] = new int[cols] {};
+	for (int i = insert_row_index; i < rows; i++)
+	{
+		buffer[i + 1] = arr[i];
+	}
+	delete[] arr;
+	arr = buffer;
+	rows++;
+	return arr;
 }
 
 void FillRand(int arr[], const int n)
@@ -81,7 +152,6 @@ void FillRand(int arr[], const int n)
 		*(arr + i) = rand() % 100;
 	}
 }
-
 void FillRand(int** arr, const int rows, const int cols)
 {
 	for (int i = 0; i < rows; i++)
@@ -92,7 +162,6 @@ void FillRand(int** arr, const int rows, const int cols)
 		}
 	}
 }
-
 void Print(int arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
