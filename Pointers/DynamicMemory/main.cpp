@@ -12,17 +12,17 @@ void FillRand(int** arr, const int rows, const int cols);
 template<typename T>void Print(T arr[], const int n);
 template<typename T>void Print(T** arr, const int rows, const int cols);
 
-template<typename T>T* push_back(T arr[], int& n, int value);
+template<typename T>T* push_back(T arr[], int& n, T value);
 template<typename T>T* pop_back(T arr[], int& n);
 
-template<typename T>T* push_front(T arr[], int& n, int value);
+template<typename T>T* push_front(T arr[], int& n, T value);
 template<typename T>T* pop_front(T arr[], int& n);
 
 template<typename T>T* insert(T arr[], int& n, int insert_number, T insert_value);
 template<typename T>T* erase(T arr[], int& n, int erase_number);
 
-//#define DYNAMIC_MEMORY_1
-#define DYNAMIC_MEMORY_2
+#define DYNAMIC_MEMORY_1
+//#define DYNAMIC_MEMORY_2
 
 void main()
 {
@@ -218,7 +218,7 @@ template<typename T>T* push_front(T arr[], int& n, T value)
 	n++;
 	return arr;
 }
-template<typename T>T* pop_front(int arr[], int& n)
+template<typename T>T* pop_front(T arr[], int& n)
 {
 	T* buffer = new T[--n];
 	for (int i = 0; i < n; i++) buffer[i] = arr[i + 1];
